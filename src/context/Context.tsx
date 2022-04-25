@@ -4,7 +4,7 @@ import { cartReducer, productReducer } from "./reducer";
 
 const Cart: React.Context<object> = createContext({});
 
-const Context = ({ children }) => {
+const Context = (props: any) => {
   const products = [...Array(20)].map(() => ({
     id: faker.datatype.uuid(),
     name: faker.commerce.productName(),
@@ -28,7 +28,7 @@ const Context = ({ children }) => {
 
   return (
     <Cart.Provider value={{ state, dispatch, productState, productDispatch }}>
-      {children}
+      {props.children}
     </Cart.Provider>
   );
 };

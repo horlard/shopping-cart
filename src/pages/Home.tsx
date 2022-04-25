@@ -14,25 +14,30 @@ const Home = () => {
     let sortedProducts = products;
 
     if (productState.sort) {
-      sortedProducts = sortedProducts.sort((a, b) =>
-        productState.sort === "lowToHigh"
-          ? a.price - b.price
-          : b.price - a.price
+      sortedProducts = sortedProducts.sort(
+        (a: { price: number }, b: { price: number }) =>
+          productState.sort === "lowToHigh"
+            ? a.price - b.price
+            : b.price - a.price
       );
     }
     if (!productState.byStock) {
-      sortedProducts = sortedProducts.filter((prod) => prod.inStock);
+      sortedProducts = sortedProducts.filter(
+        (prod: { inStock: boolean }) => prod.inStock
+      );
     }
     if (productState.byFastDelivery) {
-      sortedProducts = sortedProducts.filter((prod) => prod.fastDelivery);
+      sortedProducts = sortedProducts.filter(
+        (prod: { fastDelivery: boolean }) => prod.fastDelivery
+      );
     }
     if (productState.byRating) {
       sortedProducts = sortedProducts.filter(
-        (prod) => prod.ratings <= productState.byRating
+        (prod: { ratings: number }) => prod.ratings <= productState.byRating
       );
     }
     if (productState.searchQuery) {
-      sortedProducts = sortedProducts.filter((prod) =>
+      sortedProducts = sortedProducts.filter((prod: { name: string }) =>
         prod.name.toLowerCase().includes(productState.searchQuery)
       );
     }
@@ -43,7 +48,7 @@ const Home = () => {
     <div className="home">
       <Filter />
       <div className="productsContainer">
-        {transformProducts().map((prod) => {
+        {transformProducts().map((prod: { id: number }) => {
           return <SingleProducts product={prod} key={prod.id} />;
         })}
       </div>

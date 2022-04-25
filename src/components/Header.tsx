@@ -33,10 +33,12 @@ const Header = () => {
             }
           />
         </Navbar.Text>
-        <Dropdown alignRight>
+        <Dropdown alignright="true">
           <Dropdown.Toggle variant="success">
             <FaShoppingCart fontSize="25px" />
-            {state.cart.length > 0 && <Badge>{state.cart.length}</Badge>}
+            {state.cart.length > 0 && (
+              <Badge bg="success">{state.cart.length}</Badge>
+            )}
           </Dropdown.Toggle>
           <Dropdown.Menu>
             {state.cart.length > 0 ? (

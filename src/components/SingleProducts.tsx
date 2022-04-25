@@ -7,7 +7,7 @@ interface iProps {
   product: {
     name: string;
     image: string;
-    price: number;
+    price: string;
     fastDelivery: boolean;
     ratings: number;
     inStock: number;
