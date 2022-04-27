@@ -13,7 +13,7 @@ import { Link } from "react-router-dom";
 import { CartState } from "../context/Context";
 
 const Header = () => {
-  const { state, dispatch, productDispatch } = CartState();
+  const { productState, productDispatch, filterDispatch } = CartState();
   return (
     <Navbar bg="dark" variant="dark">
       <Container>
@@ -26,7 +26,7 @@ const Header = () => {
             className="m-auto"
             style={{ width: "500px" }}
             onChange={(e) =>
-              productDispatch({
+              filterDispatch({
                 type: "FILTER_BY_SEARCH",
                 payload: e.target.value,
               })
@@ -36,14 +36,14 @@ const Header = () => {
         <Dropdown alignright="true">
           <Dropdown.Toggle variant="success">
             <FaShoppingCart fontSize="25px" />
-            {state.cart.length > 0 && (
-              <Badge bg="success">{state.cart.length}</Badge>
+            {productState.cart.length > 0 && (
+              <Badge bg="success">{productState.cart.length}</Badge>
             )}
           </Dropdown.Toggle>
           <Dropdown.Menu>
-            {state.cart.length > 0 ? (
+            {productState.cart.length > 0 ? (
               <>
-                {state.cart.map((prod) => {
+                {productState.cart.map((prod) => {
                   return (
                     <span className="cartitem" key={prod.id}>
                       <img
@@ -59,7 +59,7 @@ const Header = () => {
                         fontSize="20px"
                         style={{ cursor: "pointer" }}
                         onClick={() =>
-                          dispatch({
+                          productDispatch({
                             type: "REMOVE_FROM_CART",
                             payload: prod,
                           })

@@ -1,5 +1,10 @@
-export const cartReducer = (
-  state: { cart: [] },
+interface ProductReducerState {
+  products: {};
+  cart: any[];
+}
+
+export const productReducer = (
+  state: ProductReducerState,
   action: { payload: { id: number; qty: number }; type: string }
 ) => {
   switch (action.type) {
@@ -24,7 +29,7 @@ export const cartReducer = (
   }
 };
 
-export const productReducer = (
+export const filterReducer = (
   state: { byStock: boolean; byFastDelivery: boolean },
   action: { payload: {}; type: string }
 ) => {

@@ -4,7 +4,7 @@ import "../styles.css";
 import Rating from "./Rating";
 
 const Filters = () => {
-  const { productState, productDispatch } = CartState();
+  const { filterState, filterDispatch } = CartState();
 
   return (
     <div className="filters">
@@ -16,9 +16,9 @@ const Filters = () => {
           name="group1"
           type="radio"
           onChange={() =>
-            productDispatch({ type: "SORT_BY_PRICE", payload: "lowToHigh" })
+            filterDispatch({ type: "SORT_BY_PRICE", payload: "lowToHigh" })
           }
-          checked={productState.sort === "lowToHigh" ? true : false}
+          checked={filterState.sort === "lowToHigh" ? true : false}
         />
       </span>
       <span>
@@ -29,9 +29,9 @@ const Filters = () => {
           type="radio"
           id={`inline-2`}
           onChange={() =>
-            productDispatch({ type: "SORT_BY_PRICE", payload: "HighToLow" })
+            filterDispatch({ type: "SORT_BY_PRICE", payload: "HighToLow" })
           }
-          checked={productState.sort === "HighToLow" ? true : false}
+          checked={filterState.sort === "HighToLow" ? true : false}
         />
       </span>
       <span>
@@ -42,11 +42,11 @@ const Filters = () => {
           type="checkbox"
           id={`inline-3`}
           onChange={() =>
-            productDispatch({
+            filterDispatch({
               type: "FILTER_BY_STOCK",
             })
           }
-          checked={productState.byStock}
+          checked={filterState.byStock}
         />
       </span>
       <span>
@@ -57,26 +57,26 @@ const Filters = () => {
           type="checkbox"
           id={`inline-4`}
           onChange={() =>
-            productDispatch({
+            filterDispatch({
               type: "FILTER_BY_DELIVERY",
             })
           }
-          checked={productState.byFastDelivery}
+          checked={filterState.byFastDelivery}
         />
       </span>
       <span>
         <label style={{ paddingRight: 10 }}>Rating: </label>
         <Rating
-          rating={productState.byRating}
+          rating={filterState.byRating}
           onClick={(i) =>
-            productDispatch({ type: "FILTER_BY_RATING", payload: i + 1 })
+            filterDispatch({ type: "FILTER_BY_RATING", payload: i + 1 })
           }
         />
       </span>
       <Button
         variant="light"
         onClick={() =>
-          productDispatch({
+          filterDispatch({
             type: "CLEAR_FILTERS",
           })
         }

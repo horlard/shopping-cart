@@ -5,19 +5,22 @@ import Rating from "../components/Rating";
 import { CartState } from "../context/Context";
 
 const Cart = () => {
-  const { state, dispatch } = CartState();
+  const { productState, productDispatch } = CartState();
   const [total, setTotal] = useState(0);
 
   useEffect(() => {
     setTotal(
-      state.cart.reduce((acc, curr) => acc + Number(curr.price) * curr.qty, 0)
+      productState.cart.reduce(
+        (acc, curr) => acc + Number(curr.price) * curr.qty,
+        0
+      )
     );
-  }, [state.cart]);
+  }, [productState.cart]);
   return (
     <div className="home">
       <div className="productContainer">
         <ListGroup>
-          {state.cart.map((prod) => (
+          {productState.cart.map((prod) => (
             <ListGroup.Item key={prod.id}>
               <Row>
                 <Col md={2}>
@@ -35,7 +38,7 @@ const Cart = () => {
                     as="select"
                     value={prod.qty}
                     onChange={(e) =>
-                      dispatch({
+                      productDispatch({
                         type: "CHANGE_QTY",
                         payload: {
                           id: prod.id,
@@ -54,7 +57,7 @@ const Cart = () => {
                     type="button"
                     variant="light"
                     onClick={() =>
-                      dispatch({
+                      productDispatch({
                         type: "REMOVE_FROM_CART",
                         payload: prod,
                       })
@@ -69,9 +72,11 @@ const Cart = () => {
         </ListGroup>
       </div>
       <div className="filters summary">
-        <span className="title">Subtotal ({state.cart.length}) items</span>
+        <span className="title">
+          Subtotal ({productState.cart.length}) items
+        </span>
         <span style={{ fontWeight: 700, fontSize: 20 }}>Total: ₦ {total}</span>
-        <Button type="button" disabled={state.cart.length === 0}>
+        <Button type="button" disabled={productState.cart.length === 0}>
           Proceed to Checkout
         </Button>
       </div>

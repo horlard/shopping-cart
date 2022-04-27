@@ -11,7 +11,7 @@ interface iProps {
     fastDelivery: boolean;
     ratings: number;
     inStock: number;
-    id: number;
+    id: string;
   };
   key: number;
 }
@@ -20,8 +20,8 @@ const SingleProducts: React.FC<iProps> = ({
   product: { name, image, price, fastDelivery, ratings, inStock, id },
   product,
 }) => {
-  const { state, dispatch } = CartState();
-  console.log(state);
+  const { productState, productDispatch } = CartState();
+  console.log(productState);
 
   return (
     <div className="products">
@@ -36,13 +36,18 @@ const SingleProducts: React.FC<iProps> = ({
             ) : (
               <div>4 days delivery</div>
             )}
-            <Rating rating={ratings} />
+            <Rating
+              rating={ratings}
+              onClick={function (i: number): void {
+                throw new Error("Function not implemented.");
+              }}
+            />
           </Card.Subtitle>
-          {state.cart.some((p) => p.id === id) ? (
+          {productState.cart.some((p) => p.id === id) ? (
             <Button
               variant="danger"
               onClick={() =>
-                dispatch({ type: "REMOVE_FROM_CART", payload: product })
+                productDispatch({ type: "REMOVE_FROM_CART", payload: product })
               }
             >
               Remove from Cart
@@ -51,7 +56,7 @@ const SingleProducts: React.FC<iProps> = ({
             <Button
               disabled={inStock === 0 ? true : false}
               onClick={() =>
-                dispatch({
+                productDispatch({
                   type: "ADD_TO_CART",
                   payload: product,
                 })

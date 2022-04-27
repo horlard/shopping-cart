@@ -6,39 +6,39 @@ import Filter from "../components/Filter";
 
 const Home = () => {
   const {
-    state: { products },
-    productState,
+    productState: { products },
+    filterState,
   } = CartState();
 
   const transformProducts = () => {
     let sortedProducts = products;
 
-    if (productState.sort) {
+    if (filterState.sort) {
       sortedProducts = sortedProducts.sort(
-        (a: { price: number }, b: { price: number }) =>
-          productState.sort === "lowToHigh"
-            ? a.price - b.price
-            : b.price - a.price
+        (a: { price: string }, b: { price: string }) =>
+          filterState.sort === "lowToHigh"
+            ? Number(a.price) - Number(b.price)
+            : Number(b.price) - Number(a.price)
       );
     }
-    if (!productState.byStock) {
+    if (!filterState.byStock) {
       sortedProducts = sortedProducts.filter(
-        (prod: { inStock: boolean }) => prod.inStock
+        (prod: { inStock: number }) => prod.inStock
       );
     }
-    if (productState.byFastDelivery) {
+    if (filterState.byFastDelivery) {
       sortedProducts = sortedProducts.filter(
         (prod: { fastDelivery: boolean }) => prod.fastDelivery
       );
     }
-    if (productState.byRating) {
+    if (filterState.byRating) {
       sortedProducts = sortedProducts.filter(
-        (prod: { ratings: number }) => prod.ratings <= productState.byRating
+        (prod: { ratings: number }) => prod.ratings <= filterState.byRating
       );
     }
-    if (productState.searchQuery) {
+    if (filterState.searchQuery) {
       sortedProducts = sortedProducts.filter((prod: { name: string }) =>
-        prod.name.toLowerCase().includes(productState.searchQuery)
+        prod.name.toLowerCase().includes(filterState.searchQuery)
       );
     }
     return sortedProducts;
@@ -48,8 +48,8 @@ const Home = () => {
     <div className="home">
       <Filter />
       <div className="productsContainer">
-        {transformProducts().map((prod: { id: number }) => {
-          return <SingleProducts product={prod} key={prod.id} />;
+        {transformProducts().map((prod: { id: string }) => {
+          return <SingleProducts product={prod} key={Number(prod.id)} />;
         })}
       </div>
     </div>

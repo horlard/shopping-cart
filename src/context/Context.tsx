@@ -1,8 +1,14 @@
 import React, { createContext, useReducer, useContext } from "react";
 import { faker } from "@faker-js/faker";
-import { cartReducer, productReducer } from "./reducer";
+import { productReducer, filterReducer } from "./reducer";
+import { CartContext } from "../types";
 
-const Cart: React.Context<object> = createContext({});
+const Cart: React.Context<CartContext> = createContext({
+  productState: {},
+  productDispatch: () => {},
+  filterState: {},
+  filterDispatch: () => {},
+});
 
 const Context = (props: any) => {
   const products = [...Array(20)].map(() => ({
@@ -14,11 +20,11 @@ const Context = (props: any) => {
     fastDelivery: faker.datatype.boolean(),
     ratings: faker.random.arrayElement([1, 2, 3, 4, 5]),
   }));
-  const [state, dispatch] = useReducer(cartReducer, {
+  const [productState, productDispatch] = useReducer(productReducer, {
     products,
     cart: [],
   });
-  const [productState, productDispatch] = useReducer(productReducer, {
+  const [filterState, filterDispatch] = useReducer(filterReducer, {
     byStock: false,
     byFastDelivery: false,
     byRating: 0,
@@ -27,7 +33,9 @@ const Context = (props: any) => {
   console.log(products);
 
   return (
-    <Cart.Provider value={{ state, dispatch, productState, productDispatch }}>
+    <Cart.Provider
+      value={{ productState, productDispatch, filterState, filterDispatch }}
+    >
       {props.children}
     </Cart.Provider>
   );
