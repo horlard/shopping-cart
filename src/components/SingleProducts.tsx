@@ -1,6 +1,6 @@
 import React from "react";
 import { Button, Card } from "react-bootstrap";
-import { CartState } from "../context/Context";
+import { StoreState } from "../context/ProductsProvider";
 import Rating from "./Rating";
 
 interface iProps {
@@ -20,7 +20,7 @@ const SingleProducts: React.FC<iProps> = ({
   product: { name, image, price, fastDelivery, ratings, inStock, id },
   product,
 }) => {
-  const { productState, productDispatch } = CartState();
+  const { productState, productDispatch } = StoreState();
   console.log(productState);
 
   return (

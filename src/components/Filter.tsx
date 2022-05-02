@@ -1,10 +1,10 @@
 import { Button, Form } from "react-bootstrap";
-import { CartState } from "../context/Context";
+import { StoreState } from "../context/ProductsProvider";
 import "../styles.css";
 import Rating from "./Rating";
 
 const Filters = () => {
-  const { filterState, filterDispatch } = CartState();
+  const { filterState, filterDispatch } = StoreState();
 
   return (
     <div className="filters">

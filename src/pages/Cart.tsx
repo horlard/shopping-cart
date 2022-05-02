@@ -2,10 +2,10 @@ import React, { useEffect, useState } from "react";
 import { Button, Col, Form, ListGroup, Row, Image } from "react-bootstrap";
 import { AiFillDelete } from "react-icons/ai";
 import Rating from "../components/Rating";
-import { CartState } from "../context/Context";
+import { StoreState } from "../context/ProductsProvider";
 
 const Cart = () => {
-  const { productState, productDispatch } = CartState();
+  const { productState, productDispatch } = StoreState();
   const [total, setTotal] = useState(0);
 
   useEffect(() => {
@@ -31,7 +31,12 @@ const Cart = () => {
                 </Col>
                 <Col md={2}>₦ {prod.price}</Col>
                 <Col md={2}>
-                  <Rating rating={prod.ratings} />
+                  <Rating
+                    rating={prod.ratings}
+                    onClick={function (i: number): void {
+                      throw new Error("Function not implemented.");
+                    }}
+                  />
                 </Col>
                 <Col md={2}>
                   <Form.Control
@@ -42,7 +47,7 @@ const Cart = () => {
                         type: "CHANGE_QTY",
                         payload: {
                           id: prod.id,
-                          qty: e.target.value,
+                          qty: Number(e.target.value),
                         },
                       })
                     }

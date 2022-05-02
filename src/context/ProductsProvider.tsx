@@ -1,16 +1,24 @@
 import React, { createContext, useReducer, useContext } from "react";
 import { faker } from "@faker-js/faker";
 import { productReducer, filterReducer } from "./reducer";
-import { CartContext } from "../types";
+import { StoreContextType } from "../types";
 
-const Cart: React.Context<CartContext> = createContext({
-  productState: {},
+const Store = createContext<StoreContextType>({
+  productState: {
+    cart: [],
+    products: [],
+  },
   productDispatch: () => {},
-  filterState: {},
+  filterState: {
+    byStock: false,
+    byFastDelivery: false,
+    byRating: 0,
+    searchQuery: "",
+  },
   filterDispatch: () => {},
 });
 
-const Context = (props: any) => {
+const ProductsProvider = (props: { children: React.ReactChild }) => {
   const products = [...Array(20)].map(() => ({
     id: faker.datatype.uuid(),
     name: faker.commerce.productName(),
@@ -33,16 +41,16 @@ const Context = (props: any) => {
   console.log(products);
 
   return (
-    <Cart.Provider
+    <Store.Provider
       value={{ productState, productDispatch, filterState, filterDispatch }}
     >
       {props.children}
-    </Cart.Provider>
+    </Store.Provider>
   );
 };
 
-export const CartState = () => {
-  return useContext(Cart);
+export const StoreState = () => {
+  return useContext(Store);
 };
 
-export default Context;
+export default ProductsProvider;

@@ -1,14 +1,14 @@
 import React from "react";
 import SingleProducts from "../components/SingleProducts";
-import { CartState } from "../context/Context";
 import "../styles.css";
 import Filter from "../components/Filter";
+import { StoreState } from "../context/ProductsProvider";
 
 const Home = () => {
   const {
     productState: { products },
     filterState,
-  } = CartState();
+  } = StoreState();
 
   const transformProducts = () => {
     let sortedProducts = products;
@@ -48,7 +48,7 @@ const Home = () => {
     <div className="home">
       <Filter />
       <div className="productsContainer">
-        {transformProducts().map((prod: { id: string }) => {
+        {transformProducts().map((prod) => {
           return <SingleProducts product={prod} key={Number(prod.id)} />;
         })}
       </div>

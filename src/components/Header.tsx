@@ -10,15 +10,15 @@ import {
 import { AiFillDelete } from "react-icons/ai";
 import { FaShoppingCart } from "react-icons/fa";
 import { Link } from "react-router-dom";
-import { CartState } from "../context/Context";
+import { StoreState } from "../context/ProductsProvider";
 
 const Header = () => {
-  const { productState, productDispatch, filterDispatch } = CartState();
+  const { productState, productDispatch, filterDispatch } = StoreState();
   return (
     <Navbar bg="dark" variant="dark">
       <Container>
         <Navbar.Brand>
-          <a href="/">Shopping Cart</a>
+          <Link to="/">Shopping Cart</Link>
         </Navbar.Brand>
         <Navbar.Text className="search">
           <FormControl
@@ -33,7 +33,7 @@ const Header = () => {
             }
           />
         </Navbar.Text>
-        <Dropdown alignright="true">
+        <Dropdown align="end">
           <Dropdown.Toggle variant="success">
             <FaShoppingCart fontSize="25px" />
             {productState.cart.length > 0 && (
@@ -53,7 +53,7 @@ const Header = () => {
                       />
                       <div className="cartItemDetail">
                         <span>{prod.name}</span>
-                        <span>₹ {prod.price.split(".")[0]}</span>
+                        <span>₦ {prod.price.split(".")[0]}</span>
                       </div>
                       <AiFillDelete
                         fontSize="20px"
